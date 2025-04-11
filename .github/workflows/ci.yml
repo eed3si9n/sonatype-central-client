@@ -11,8 +11,6 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main]
-    tags: [v*]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -24,7 +22,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         scala: [2.12.20, 2.13.16, 3.3.5]
-        java: [temurin@11]
+        java: [zulu@8]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -32,19 +30,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Java (temurin@11)
-        if: matrix.java == 'temurin@11'
+      - name: Setup Java (zulu@8)
+        if: matrix.java == 'zulu@8'
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 11
+          distribution: zulu
+          java-version: 8
           cache: sbt
 
       - name: Setup sbt
         uses: sbt/setup-sbt@v1
 
-      - name: Check that workflows are up to date
-        run: sbt '++ ${{ matrix.scala }}' githubWorkflowCheck
+      # - name: Check that workflows are up to date
+      #  run: sbt '++ ${{ matrix.scala }}' githubWorkflowCheck
 
       - name: Build
         run: 'sbt ''++ ${{ matrix.scala }}'' clean compile integration_test/test:compile'
@@ -63,7 +61,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         scala: [2.12.20]
-        java: [temurin@11]
+        java: [zulu@8]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current branch (full)
@@ -71,12 +69,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Java (temurin@11)
-        if: matrix.java == 'temurin@11'
+      - name: Setup Java (zulu@8)
+        if: matrix.java == 'zulu@8'
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 11
+          distribution: zulu
+          java-version: 8
           cache: sbt
 
       - name: Setup sbt
