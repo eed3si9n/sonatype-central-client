@@ -9,7 +9,7 @@ import xerial.sbt.Sonatype.sonatypeCentralHost
 import Dependencies.versions
 
 addCommandAlias("fmt", "scalafmtAll; scalafmtSbt; mock_server/scalafmtAll")
-addCommandAlias("it", "integration_test/test")
+addCommandAlias("it", "integration_test/testOnly com.lumidion.sonatype.central.client.integration.test.RequestsItSpec")
 addCommandAlias("compileAll", "+compile; integration_test/test:compile; mock_server/compile")
 addCommandAlias(
   "mimaChecks",
